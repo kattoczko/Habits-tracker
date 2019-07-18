@@ -1,10 +1,13 @@
 import React from "react";
-import HabitsTable from "../HabitsTable/HabitsTable";
+import { Route, Switch } from "react-router-dom";
+import HabitsPage from "../HabitsPage/HabitsPage";
 
 export default function App() {
   return (
     <div>
-      <HabitsTable />
+      <Switch>
+        <Route exact path="/" component={HabitsPage} />
+      </Switch>
     </div>
   );
 }
