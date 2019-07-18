@@ -1,4 +1,4 @@
-import * as types from "../constantat/actionTypes";
+import * as types from "./actionTypes";
 
 export function addNewDoneDate(habitId, date) {
   return {

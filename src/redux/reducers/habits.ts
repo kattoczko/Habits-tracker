@@ -1,4 +1,4 @@
-import * as types from "../constantat/actionTypes";
+import * as types from "../actions/actionTypes";
 import initialState from "../store/initialState";
 
 export default function reducer(state = initialState.habits, action) {
