@@ -1,13 +1,13 @@
 import React from "react";
 
-type dataItem = {
+interface Row {
   id: number;
   name: string;
-  cells: any[];
-};
+  cells: (JSX.Element | string)[];
+}
 
 interface TableProps {
-  data: dataItem[];
+  data: Row[];
   headCells: string[];
 }
 
