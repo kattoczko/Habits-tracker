@@ -14,11 +14,8 @@ export function getYearMonthAndDay(date: Date): YearMontAndDate {
   };
 }
 
-export function getDatesBefore(
-  yearMonthAndDate: yearMontAndDate,
-  numberOfDaysBefore: number
-): Date[] {
-  const { year, month, day } = yearMonthAndDate;
+export function getDatesBefore(date: Date, numberOfDaysBefore: number): Date[] {
+  const { year, month, day } = getYearMonthAndDay(date);
   let datesBefore: Date[] = [];
   for (let i = 0; i < numberOfDaysBefore; i++) {
     datesBefore.push(new Date(year, month, day - i));
@@ -27,6 +24,10 @@ export function getDatesBefore(
   return datesBefore;
 }
 
-export function getDayOfTheWeekName(day: number): nameOfDay {
+export function getDayOfTheWeekName(day: number): NameOfDay {
   return weekDays[day];
+}
+
+export function getDaysInMonth(month: number, year: number): number {
+  return 32 - new Date(year, month, 32).getDate();
 }
