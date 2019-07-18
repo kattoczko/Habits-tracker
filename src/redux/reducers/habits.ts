@@ -1,5 +1,6 @@
 import * as types from "../actions/actionTypes";
 import initialState from "../store/initialState";
+import { Habit } from "../../types";
 
 export default function reducer(state = initialState.habits, action) {
   switch (action.type) {
@@ -17,6 +18,9 @@ export default function reducer(state = initialState.habits, action) {
         }
         return habit;
       });
+    case types.ADD_NEW_HABIT:
+      const newHabit: Habit = action.newHabit;
+      return [...state, newHabit];
     default:
       return state;
   }

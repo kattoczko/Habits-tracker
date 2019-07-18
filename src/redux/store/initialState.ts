@@ -1,21 +1,13 @@
-interface Habit {
-  id: number;
-  name: string;
-  done: string[];
-}
+import { State } from "../../types";
 
-interface initialStateTypes {
-  habits: Habit[];
-}
-
-const initialState: initialStateTypes = {
+const initialState: State = {
   habits: [
     {
       id: 1,
       name: "Yoga",
-      done: ["2019, 6, 17", "2019, 6, 15", "2019, 6, 14"]
+      done: []
     },
-    { id: 2, name: "Programing", done: ["2019, 6, 15"] }
+    { id: 2, name: "Programing", done: [] }
   ]
 };
 
