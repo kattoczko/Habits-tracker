@@ -1,34 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Table from "../Table/Table";
 import IconButton from "../IconButton/IconButton";
-
-import * as habitsActions from "../../actions/habitsActions";
+import {
+  getYearMonthAndDay,
+  getDatesBefore,
+  getDayOfTheWeekName
+} from "../../utils/dateUtils";
+import * as habitsActions from "../../redux/actions/habitsActions";
 
 function HabitsTable({ habits, actions }) {
-  console.log("props habits", habits);
-
-  // function handleIconClick(e, habitId, date) {
-  //   e.preventDefault();
-  //   actions.addNewDoneDate(habitId, date);
-  // }
-
-  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const date: Date = new Date();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const year = date.getFullYear();
-  let lastWeek: Date[] = [];
-  for (let i = 0; i < 7; i++) {
-    lastWeek.push(new Date(year, month, day - i));
-  }
-  const headCells = lastWeek.map(date => weekDays[date.getDay()]);
+  const today: Date = new Date();
+  const lastWeek: Date[] = getDatesBefore(getYearMonthAndDay(today), 7);
+  const headCells = lastWeek.map(date => getDayOfTheWeekName(date.getDay()));
   const data = habits.map(habit => {
     const done = lastWeek.map(date => {
-      const day = date.getDate();
-      const month = date.getMonth();
-      const year = date.getFullYear();
+      const { year, month, day } = getYearMonthAndDay(date);
 
       if (habit.done.includes(`${year}, ${month}, ${day}`)) {
         return (
