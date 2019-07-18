@@ -1,12 +1,8 @@
-type nameOfDay = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
-const weekDays: nameOfDay[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { NameOfDay, YearMontAndDate } from "../types";
 
-interface yearMontAndDate {
-  year: number;
-  month: number;
-  day: number;
-}
-export function getYearMonthAndDay(date: Date): yearMontAndDate {
+const weekDays: NameOfDay[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export function getYearMonthAndDay(date: Date): YearMontAndDate {
   const month = date.getMonth();
   const day = date.getDate();
   const year = date.getFullYear();
