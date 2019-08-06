@@ -38,6 +38,7 @@ const EditHabit: React.FunctionComponent<EditHabitProps> = ({
 
   return (
     <HabitForm
+      heading="Edit habit"
       habitNameInputValue={name}
       errorMessage={errorMessage}
       handleNameInputChange={handleNameInputChange}

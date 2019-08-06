@@ -1,5 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
+import styles from "./Modal.module.css";
 
 ReactModal.setAppElement("#root");
 
@@ -21,6 +22,8 @@ const Modal: React.FunctionComponent<ModalProps> = ({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel={contentLabel}
+      className={styles.content}
+      overlayClassName={styles.overlay}
     >
       {children}
     </ReactModal>

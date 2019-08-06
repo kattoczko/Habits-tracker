@@ -1,0 +1,8 @@
+.habitLink {
+  text-decoration: none;
+  color: black;
+}
+
+.habitLink:hover {
+  color: green;
+}

@@ -1,0 +1,10 @@
+@import "../variables.module.css";
+
+.form {
+  font-size: var(--font-size-normal);
+}
+
+.heading {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+}

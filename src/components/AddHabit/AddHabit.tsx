@@ -57,6 +57,7 @@ const AddHabit: React.FunctionComponent<AddHabitProps> = ({
       contentLabel="Habit"
     >
       <HabitForm
+        heading="Add habit"
         habitNameInputValue={name}
         errorMessage={errorMessage}
         handleNameInputChange={handleNameInputChange}

@@ -1,0 +1,15 @@
+@import "../variables.module.css";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.heading {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+}

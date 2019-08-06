@@ -1,9 +1,11 @@
 import React from "react";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
+import styles from "./HabitForm.module.css";
 
 interface HabitFormProps {
   habitNameInputValue: string;
+  heading: string;
   errorMessage?: string;
   handleNameInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,14 +14,15 @@ interface HabitFormProps {
 
 const HabitForm: React.FunctionComponent<HabitFormProps> = ({
   habitNameInputValue,
+  heading,
   errorMessage,
   handleNameInputChange,
   handleClose,
   handleSave
 }) => {
   return (
-    <form>
-      <h2>Add Habit</h2>
+    <form className={styles.form}>
+      <h2 className={styles.heading}>{heading}</h2>
       <TextInput
         id="habitName"
         value={habitNameInputValue}

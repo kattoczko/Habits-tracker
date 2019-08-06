@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Table.module.css";
 
 export interface Row {
   id: string;
@@ -13,22 +14,26 @@ interface TableProps {
 
 const Table: React.FunctionComponent<TableProps> = ({ data, headCells }) => {
   const tableHead = headCells.map((cellContent, i) => (
-    <th key={`${cellContent}${i}`}>{cellContent}</th>
+    <th className={styles.cell} key={`${cellContent}${i}`}>
+      {cellContent}
+    </th>
   ));
   const tableBody = data.map(item => {
     const cells = item.cells.map((cell, i) => (
-      <td key={`${item.name}${i}`}>{cell}</td>
+      <td className={styles.cell} key={`${item.name}${i}`}>
+        {cell}
+      </td>
     ));
     return (
-      <tr key={item.id}>
-        <td>{item.name}</td>
+      <tr className={styles.row} key={item.id}>
+        <td className={styles.cell}>{item.name}</td>
         {cells}
       </tr>
     );
   });
 
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>{tableHead}</tr>
       </thead>

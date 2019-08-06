@@ -12,6 +12,7 @@ import {
   addNewDoneDate,
   removeDoneDate
 } from "../../redux/habits/habitsActions";
+import styles from "./HabitsTable.module.css";
 
 interface HabitsTableProps {
   habits: HabitsState;
@@ -29,7 +30,11 @@ const HabitsTable: React.FunctionComponent<HabitsTableProps> = ({
   const headCells = lastWeek.map(date => getDayOfTheWeekName(date.getDay()));
   const tableData: Row[] = habits.map(habit => {
     const cellsContent = lastWeek.map(date => createCellContent(habit, date));
-    const habitLink = <Link to={"/habits/" + habit.id}>{habit.name}</Link>;
+    const habitLink = (
+      <Link className={styles.habitLink} to={"/habits/" + habit.id}>
+        {habit.name}
+      </Link>
+    );
     return { id: habit.id, name: habitLink, cells: cellsContent };
   });
 

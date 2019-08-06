@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Header.module.css";
 
 interface HeaderElements {
   Heading: React.FunctionComponent<React.ReactNode>;
@@ -8,15 +9,11 @@ interface HeaderElements {
 const Header: React.FunctionComponent<React.ReactNode> & HeaderElements = ({
   children
 }) => {
-  return (
-    <header style={{ display: "flex", justifyContent: "space-between" }}>
-      {children}
-    </header>
-  );
+  return <header className={styles.header}>{children}</header>;
 };
 
 Header.Heading = ({ children }) => {
-  return <span>{children}</span>;
+  return <span className={styles.heading}>{children}</span>;
 };
 
 Header.Actions = ({ children }) => {

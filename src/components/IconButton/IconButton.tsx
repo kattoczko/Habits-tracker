@@ -22,11 +22,12 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
   iconName = "",
   active = true
 }) => {
-  const iconClassNames = cx(styles.base, {
-    [styles.active]: active
+  const iconClassNames = cx(styles.iconBase, {
+    [styles.iconActive]: active
   });
   return (
     <button
+      className={styles.button}
       type="button"
       disabled={disabled}
       onClick={onClick}
