@@ -1,0 +1,11 @@
+:root {
+  --base-font-size: 62.5%; /* 10px */
+  --font-family: "Lato", sans-serif;
+
+  --font-size-small: 1.3rem;
+  --font-size-normal: 1.6rem;
+  --font-size-big: 1.8rem;
+  --font-size-heading: 2.1rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+}
