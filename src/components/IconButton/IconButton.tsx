@@ -1,20 +1,30 @@
 import React from "react";
+import cx from "classnames";
+import styles from "./IconButton.module.css";
+
+type iconNames = "done" | "close" | "add" | "delete" | "edit";
 
 interface IconButtonProps {
+  // iconName is Material Design icon name https://material.io/resources/icons/?style=baseline
+  iconName: iconNames;
   value?: string;
   name?: string;
-  children: React.ReactNode;
+  active?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
 }
 
-export default function IconButton({
+const IconButton: React.FunctionComponent<IconButtonProps> = ({
   disabled = false,
   onClick = e => console.log(e),
   value = "",
   name = "",
-  children
-}: IconButtonProps) {
+  iconName = "",
+  active = true
+}) => {
+  const iconClassNames = cx(styles.base, {
+    [styles.active]: active
+  });
   return (
     <button
       type="button"
@@ -23,7 +33,11 @@ export default function IconButton({
       value={value}
       name={name}
     >
-      <span>{children}</span>
+      <span>
+        <i className={iconClassNames}>{iconName}</i>
+      </span>
     </button>
   );
-}
+};
+
+export default IconButton;

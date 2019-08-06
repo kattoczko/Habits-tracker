@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 
-import reducers from "../reducers";
+import reducers from "../habits";
 import initialState from "./initialState";
 
 const middleware = [thunk];
@@ -15,4 +15,5 @@ const store = createStore(
   composeEnhancers(applyMiddleware(...middleware), ...enhancers)
 );
 
+export type AppState = ReturnType<typeof reducers>;
 export default store;

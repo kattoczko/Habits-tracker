@@ -1,4 +1,4 @@
-import habits from "./habits";
+import habits from "./habitsReducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({ habits });

@@ -1,8 +1,8 @@
 import React from "react";
 
-interface Row {
-  id: number;
-  name: string;
+export interface Row {
+  id: string;
+  name: JSX.Element | string;
   cells: (JSX.Element | string)[];
 }
 
@@ -11,8 +11,10 @@ interface TableProps {
   headCells: string[];
 }
 
-export default function Table({ data, headCells }: TableProps) {
-  const tableHead = headCells.map(cell => <th key={cell}>{cell}</th>);
+const Table: React.FunctionComponent<TableProps> = ({ data, headCells }) => {
+  const tableHead = headCells.map((cellContent, i) => (
+    <th key={`${cellContent}${i}`}>{cellContent}</th>
+  ));
   const tableBody = data.map(item => {
     const cells = item.cells.map((cell, i) => (
       <td key={`${item.name}${i}`}>{cell}</td>
@@ -33,4 +35,6 @@ export default function Table({ data, headCells }: TableProps) {
       <tbody>{tableBody}</tbody>
     </table>
   );
-}
+};
+
+export default Table;

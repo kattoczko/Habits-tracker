@@ -4,6 +4,7 @@ interface InputProps {
   label: string;
   name: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  error?: string;
   value?: string;
   id?: string;
   required?: boolean;
@@ -11,7 +12,7 @@ interface InputProps {
   maxLength?: number;
 }
 
-export default function TextInput({
+const TextInput: React.FunctionComponent<InputProps> = ({
   label,
   name,
   id,
@@ -19,8 +20,9 @@ export default function TextInput({
   value = "",
   required = false,
   minLength = 0,
-  maxLength = 100
-}: InputProps) {
+  maxLength = 100,
+  error = ""
+}: InputProps) => {
   return (
     <div>
       <label htmlFor={name}>{label}</label>
@@ -35,6 +37,9 @@ export default function TextInput({
         maxLength={maxLength}
         minLength={minLength}
       />
+      {error && <div>{error}</div>}
     </div>
   );
-}
+};
+
+export default TextInput;

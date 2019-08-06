@@ -1,0 +1,7 @@
+.base {
+  composes: material-icons from global;
+  color: lightgray;
+}
+.active {
+  color: black;
+}

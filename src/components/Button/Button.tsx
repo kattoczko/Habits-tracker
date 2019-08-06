@@ -3,21 +3,23 @@ import React from "react";
 type ButtonTypes = "button" | "submit" | "reset";
 
 interface ButtonProps {
+  children: React.ReactNode;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: ButtonTypes;
-  value: string;
   disabled?: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function Button({
+const Button: React.FunctionComponent<ButtonProps> = ({
+  children,
+  onClick,
   type = "button",
-  value,
-  disabled = false,
-  onClick
-}: ButtonProps) {
+  disabled = false
+}) => {
   return (
     <button type={type} onClick={onClick} disabled={disabled}>
-      {value}
+      {children}
     </button>
   );
-}
+};
+
+export default Button;

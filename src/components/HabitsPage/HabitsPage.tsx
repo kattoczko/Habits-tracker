@@ -1,39 +1,33 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
-
+import Header from "../Header/Header";
 import HabitsTable from "../HabitsTable/HabitsTable";
 import IconButton from "../IconButton/IconButton";
 import AddHabit from "../AddHabit/AddHabit";
 
-Modal.setAppElement("#root");
-
-function HabitsPage() {
+const HabitsPage: React.FunctionComponent<{}> = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  function handleOnClick() {
+  function handleOpenModal(): void {
     setModalOpen(true);
   }
-
-  function handleCloseModel() {
+  function handleCloseModal(): void {
     setModalOpen(false);
   }
 
   return (
     <div>
-      <IconButton onClick={handleOnClick}>
-        <i className="material-icons">add</i>
-      </IconButton>
+      <Header>
+        <Header.Heading>
+          <h1>Habits</h1>
+        </Header.Heading>
+        <Header.Actions>
+          <IconButton onClick={handleOpenModal} iconName="add" />
+        </Header.Actions>
+      </Header>
+      <AddHabit closeModal={handleCloseModal} isModalOpen={modalOpen} />
       <HabitsTable />
-      <Modal
-        isOpen={modalOpen}
-        // onAfterOpen={this.afterOpenModal}
-        onRequestClose={handleCloseModel}
-        contentLabel="Example Modal"
-      >
-        <AddHabit closeModal={handleCloseModel} />
-      </Modal>
     </div>
   );
-}
+};
 
 export default HabitsPage;

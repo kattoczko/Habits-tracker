@@ -3,28 +3,27 @@ import React from "react";
 interface CheckboxProps {
   id: string;
   name: string;
+  value: string;
   label: string;
-  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean;
   disabled?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function Checkbox({
+const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   id,
   name,
+  value,
   label,
-  value = label,
-  checked,
   onChange,
+  checked,
   disabled
-}: CheckboxProps) {
+}) => {
   return (
     <div>
       <input
         onChange={onChange}
         type="checkbox"
-        id={id}
         name={name}
         checked={checked}
         disabled={disabled}
@@ -33,4 +32,6 @@ export default function Checkbox({
       <label htmlFor={id}>{label}</label>
     </div>
   );
-}
+};
+
+export default Checkbox;
