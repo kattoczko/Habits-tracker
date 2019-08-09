@@ -76,7 +76,7 @@ td {
 }
 body {
   line-height: 1;
-  color: black;
+  color: var(--text-color);
   background: white;
 }
 ol,
@@ -105,10 +105,20 @@ q {
   quotes: "" "";
 }
 
+/******* Box sizing fix *******/
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 /******* Custom base *******/
 html {
   font-size: var(--base-font-size);
-  font-family: var(--font-family);
+  font-family: var(--font-family-primary);
 }
 
 /******* Material Icons classes & sizing rules *******/
