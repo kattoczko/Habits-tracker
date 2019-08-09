@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 
+import { loadState, saveState } from "../localStorage";
 import reducers from "../habits";
 import initialState from "./initialState";
 
@@ -11,9 +12,13 @@ const composeEnhancers =
 
 const store = createStore(
   reducers,
-  initialState,
+  loadState(),
   composeEnhancers(applyMiddleware(...middleware), ...enhancers)
 );
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 export type AppState = ReturnType<typeof reducers>;
 export default store;
