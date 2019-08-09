@@ -1,11 +1,18 @@
+@import "./colors.module.css";
+
 :root {
   --base-font-size: 62.5%; /* 10px */
-  --font-family: "Lato", sans-serif;
+  --font-family-primary: "Lato", sans-serif;
 
   --font-size-small: 1.3rem;
   --font-size-normal: 1.6rem;
   --font-size-big: 1.8rem;
-  --font-size-heading: 2.1rem;
+  --font-size-huge: 2.4rem;
+  --font-size-heading: 2.4rem;
   --font-weight-normal: 400;
   --font-weight-bold: 700;
+  --text-color: var(--black);
+
+  --border-radius: 0.4rem;
+  --timing-function: cubic-bezier(0, 0, 0.2, 1);
 }

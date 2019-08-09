@@ -1,3 +1,6 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
 .table {
   width: 100%;
   border-collapse: separate;
@@ -5,7 +8,7 @@
 }
 
 .row {
-  background-color: #e8e8e8;
+  background-color: var(--gray-lighter);
 }
 
 .cell {

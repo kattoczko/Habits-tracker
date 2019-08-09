@@ -1,0 +1,55 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
+.inputWrapper {
+  position: relative;
+  margin: 2rem 0;
+}
+.inputWrapper::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #0000003b;
+  border-radius: var(--border-radius);
+  transition: border 200ms var(--timing-function);
+}
+.focused:after {
+  border: 2px solid var(--accent-color);
+}
+
+.label {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(1.5rem, -50%) scale(1);
+  transition: color 200ms var(--timing-function),
+    top 200ms var(--timing-function), transform 200ms var(--timing-function),
+    padding 200ms var(--timing-function);
+}
+
+.labelShrinked {
+  color: var(--accent-color);
+  background-color: var(--white);
+  padding: 0 0.5rem;
+  top: 0;
+  transform: translate(0.5rem, -50%) scale(0.75);
+}
+
+.filled:not(.focused) .labelShrinked {
+  color: initial;
+}
+
+.input {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-normal);
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  border: 0;
+}

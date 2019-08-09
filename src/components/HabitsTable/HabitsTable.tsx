@@ -54,7 +54,8 @@ const HabitsTable: React.FunctionComponent<HabitsTableProps> = ({
       <IconButton
         onClick={handleUpdateDoneDates}
         iconName={"done"}
-        active={dateExistsInDone}
+        notActive={!dateExistsInDone}
+        filled={dateExistsInDone}
       />
     );
   }

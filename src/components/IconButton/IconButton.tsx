@@ -2,28 +2,38 @@ import React from "react";
 import cx from "classnames";
 import styles from "./IconButton.module.css";
 
-type iconNames = "done" | "close" | "add" | "delete" | "edit";
+type iconNames = "done" | "close" | "add" | "delete" | "edit" | "arrow_back";
+type size = "small" | "medium" | "big" | "huge";
 
 interface IconButtonProps {
   // iconName is Material Design icon name https://material.io/resources/icons/?style=baseline
   iconName: iconNames;
+  notActive?: boolean;
+  size?: size;
   value?: string;
   name?: string;
-  active?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  filled?: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
 }
 
 const IconButton: React.FunctionComponent<IconButtonProps> = ({
   disabled = false,
-  onClick = e => console.log(e),
+  onClick,
   value = "",
   name = "",
   iconName = "",
-  active = true
+  filled = false,
+  size = "medium",
+  notActive = false
 }) => {
   const iconClassNames = cx(styles.iconBase, {
-    [styles.iconActive]: active
+    [styles.iconLight]: notActive,
+    [styles.iconFilled]: filled,
+    "md-18": size === "small",
+    "md-24": size === "medium",
+    "md-36": size === "big",
+    "md-48": size === "huge"
   });
   return (
     <button
@@ -34,9 +44,7 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
       value={value}
       name={name}
     >
-      <span>
-        <i className={iconClassNames}>{iconName}</i>
-      </span>
+      <i className={iconClassNames}>{iconName}</i>
     </button>
   );
 };

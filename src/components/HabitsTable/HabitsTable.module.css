@@ -1,8 +1,13 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
 .habitLink {
   text-decoration: none;
-  color: black;
+  color: var(--text-color);
+  transition: color 0.2s var(--timing-function);
 }
 
-.habitLink:hover {
-  color: green;
+.habitLink:hover,
+.habitLink:focus {
+  color: var(--accent-color);
 }

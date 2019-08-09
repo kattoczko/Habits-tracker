@@ -8,3 +8,7 @@
   font-size: var(--font-size-heading);
   font-weight: var(--font-weight-bold);
 }
+
+.buttonsContainer {
+  display: flex;
+}

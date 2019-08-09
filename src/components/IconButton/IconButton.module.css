@@ -1,18 +1,36 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
 .button {
   line-height: 1;
-  padding: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
+  position: relative;
+}
+
+[data-whatintent="keyboard"] .button:focus .iconBase {
+  color: var(--accent-color);
 }
 
 .iconBase {
   composes: material-icons from global;
-  color: lightgray;
+  color: var(--text-color);
+  transition: color 0.2s var(--timing-function),
+    background-color 0.2s var(--timing-function);
+  padding: 0.5rem;
+  border-radius: 50%;
 }
 .iconBase:hover {
-  color: green;
+  color: var(--accent-color);
 }
-.iconActive {
-  color: black;
+.iconLight {
+  color: var(--gray-darker);
+}
+.iconFilled {
+  color: var(--white);
+  background-color: var(--accent-color);
+}
+.iconFilled:hover {
+  color: var(--white);
 }

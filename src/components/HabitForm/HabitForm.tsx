@@ -1,5 +1,6 @@
 import React from "react";
 import TextInput from "../TextInput/TextInput";
+import ButtonGroup from "../ButtonGroup/ButtonGroup";
 import Button from "../Button/Button";
 import styles from "./HabitForm.module.css";
 
@@ -24,19 +25,22 @@ const HabitForm: React.FunctionComponent<HabitFormProps> = ({
     <form className={styles.form}>
       <h2 className={styles.heading}>{heading}</h2>
       <TextInput
+        autofocus={true}
         id="habitName"
         value={habitNameInputValue}
         onChange={handleNameInputChange}
         name="name"
-        label="name"
+        label="Name"
         error={errorMessage}
       />
-      <Button type="button" onClick={handleClose}>
-        Close
-      </Button>
-      <Button type="submit" onClick={handleSave}>
-        Save
-      </Button>
+      <ButtonGroup>
+        <Button type="button" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button type="submit" onClick={handleSave} isPrimary={true}>
+          Save
+        </Button>
+      </ButtonGroup>
     </form>
   );
 };

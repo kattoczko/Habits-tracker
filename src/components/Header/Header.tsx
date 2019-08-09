@@ -13,11 +13,11 @@ const Header: React.FunctionComponent<React.ReactNode> & HeaderElements = ({
 };
 
 Header.Heading = ({ children }) => {
-  return <span className={styles.heading}>{children}</span>;
+  return <div className={styles.heading}>{children}</div>;
 };
 
 Header.Actions = ({ children }) => {
-  return <span>{children}</span>;
+  return <div>{children}</div>;
 };
 
 export default Header;

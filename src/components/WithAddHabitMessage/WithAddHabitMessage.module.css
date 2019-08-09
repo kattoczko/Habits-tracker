@@ -1,0 +1,25 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
+.container {
+  position: relative;
+}
+.messageContainer {
+  position: absolute;
+  right: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-top: 2rem;
+}
+.text {
+  position: relative;
+  top: 0.5rem;
+  margin-right: 2rem;
+  font-size: var(--font-size-huge);
+  white-space: nowrap;
+}
+.svg {
+  width: 10rem;
+  fill: var(--gray-light);
+}

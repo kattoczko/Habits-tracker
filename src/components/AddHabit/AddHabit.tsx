@@ -5,18 +5,17 @@ import uniqid from "uniqid";
 import { Habit } from "../../redux/habits/types";
 import * as habitsActions from "../../redux/habits/habitsActions";
 import HabitForm from "../HabitForm/HabitForm";
-import Modal from "../Modal/Modal";
+
+//TODO after closing modal focus on the last habit added
 
 interface AddHabitProps {
   addNewHabit: typeof habitsActions.addNewHabit;
   closeModal: () => void;
-  isModalOpen: boolean;
 }
 
 const AddHabit: React.FunctionComponent<AddHabitProps> = ({
   addNewHabit,
-  closeModal,
-  isModalOpen
+  closeModal
 }) => {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,32 +38,15 @@ const AddHabit: React.FunctionComponent<AddHabitProps> = ({
     setName(e.target.value);
   }
 
-  function handleCloseModal() {
-    if (name.trim().length !== 0) {
-      //TODO add close handling when name is not empty
-      alert("Are you sure you want to close?");
-      return;
-    } else {
-      setName("");
-      closeModal();
-    }
-  }
-
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onRequestClose={handleCloseModal}
-      contentLabel="Habit"
-    >
-      <HabitForm
-        heading="Add habit"
-        habitNameInputValue={name}
-        errorMessage={errorMessage}
-        handleNameInputChange={handleNameInputChange}
-        handleClose={handleCloseModal}
-        handleSave={handleSave}
-      />
-    </Modal>
+    <HabitForm
+      heading="Add habit"
+      habitNameInputValue={name}
+      errorMessage={errorMessage}
+      handleNameInputChange={handleNameInputChange}
+      handleClose={closeModal}
+      handleSave={handleSave}
+    />
   );
 };
 
