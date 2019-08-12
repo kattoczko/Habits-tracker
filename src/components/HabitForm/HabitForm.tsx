@@ -29,8 +29,8 @@ const HabitForm: React.FunctionComponent<HabitFormProps> = ({
         id="habitName"
         value={habitNameInputValue}
         onChange={handleNameInputChange}
-        name="name"
-        label="Name"
+        name="habitName"
+        label="Habit's name"
         error={errorMessage}
       />
       <ButtonGroup>

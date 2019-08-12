@@ -37,7 +37,7 @@
   background-color: var(--white);
   padding: 0 0.5rem;
   top: 0;
-  transform: translate(0.5rem, -50%) scale(0.75);
+  transform: translate(0, -50%) scale(0.75);
 }
 
 .filled:not(.focused) .labelShrinked {
@@ -50,6 +50,6 @@
   display: block;
   position: relative;
   width: 100%;
-  padding: 1.5rem;
+  padding: 1.3rem 1.5rem;
   border: 0;
 }

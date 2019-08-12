@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   HabitActionTypes,
   Habit,
@@ -24,10 +25,10 @@ export function removeDoneDate(habitId: string, date: Date): HabitActionTypes {
   };
 }
 
-export function addNewHabit(newHabit: Habit): HabitActionTypes {
+export function addNewHabit(habitName: string): HabitActionTypes {
   return {
     type: ADD_NEW_HABIT,
-    newHabit
+    newHabit: { id: uuidv4(), name: habitName, done: [] }
   };
 }
 

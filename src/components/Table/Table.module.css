@@ -14,10 +14,14 @@
 .cell {
   text-align: center;
   vertical-align: middle;
-  padding: 0.5rem 1.5rem;
+  padding: 1.5rem;
 }
 
 .cell:first-child {
+  padding-left: 2rem;
   text-align: left;
   width: 100%;
+}
+.cell:last-child {
+  padding-right: 2rem;
 }

@@ -6,7 +6,7 @@
 }
 .messageContainer {
   position: absolute;
-  right: 0.5rem;
+  right: 1.5rem;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;

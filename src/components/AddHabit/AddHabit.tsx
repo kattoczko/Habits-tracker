@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
-import uniqid from "uniqid";
-import { Habit } from "../../redux/habits/types";
 import * as habitsActions from "../../redux/habits/habitsActions";
 import HabitForm from "../HabitForm/HabitForm";
 
@@ -26,8 +24,7 @@ const AddHabit: React.FunctionComponent<AddHabitProps> = ({
       setErrorMessage("name can't be empty");
       return;
     } else {
-      const newHabit: Habit = { id: uniqid(), name: name, done: [] };
-      addNewHabit(newHabit);
+      addNewHabit(name);
       setName("");
       closeModal();
     }
