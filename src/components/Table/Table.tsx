@@ -1,32 +1,32 @@
 import React from "react";
 import styles from "./Table.module.css";
 
-export interface Row {
-  id: string;
-  name: JSX.Element | string;
-  cells: (JSX.Element | string)[];
-}
+type Column = {
+  [x: string]: string | JSX.Element;
+};
 
 interface TableProps {
-  data: Row[];
-  headCells: string[];
+  data: Column[];
 }
 
-const Table: React.FunctionComponent<TableProps> = ({ data, headCells }) => {
-  const tableHead = headCells.map((cellContent, i) => (
-    <th className={styles.cell} key={`${cellContent}${i}`}>
-      {cellContent}
+const Table: React.FunctionComponent<TableProps> = ({ data }) => {
+  const keys = Object.keys(data[0]);
+  const tableHead = keys.map((key, index) => (
+    <th className={styles.cell} key={`${key}${index}`}>
+      {key}
     </th>
   ));
-  const tableBody = data.map(item => {
-    const cells = item.cells.map((cell, i) => (
-      <td className={styles.cell} key={`${item.name}${i}`}>
-        {cell}
-      </td>
-    ));
+  const tableBody = data.map((item, i) => {
+    const cells = keys.map((key, index) => {
+      return (
+        <td className={styles.cell} key={`${item}${index}`}>
+          {item[key]}
+        </td>
+      );
+    });
+
     return (
-      <tr className={styles.row} key={item.id}>
-        <td className={styles.cell}>{item.name}</td>
+      <tr className={styles.row} key={`${i}`}>
         {cells}
       </tr>
     );
