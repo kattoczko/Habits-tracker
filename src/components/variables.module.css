@@ -16,4 +16,6 @@
 
   --border-radius: 0.4rem;
   --timing-function: cubic-bezier(0, 0, 0.2, 1);
+
+  --wrapper-max-width: 100rem;
 }
