@@ -5,7 +5,8 @@ import {
   ADD_DONE_DATE,
   ADD_NEW_HABIT,
   DELETE_HABIT,
-  UPDATE_HABIT
+  UPDATE_HABIT,
+  REORDER_HABITS
 } from "./types";
 
 const initialState: HabitsState = [];
@@ -47,6 +48,8 @@ export default function reducer(
           return habit;
         }
       });
+    case REORDER_HABITS:
+      return [...action.habits];
     default:
       return state;
   }

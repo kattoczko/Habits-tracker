@@ -3,6 +3,7 @@ export const ADD_DONE_DATE = "ADD_DONE_DATE";
 export const ADD_NEW_HABIT = "ADD_NEW_HABIT";
 export const DELETE_HABIT = "DELETE_HABIT";
 export const UPDATE_HABIT = "UPDATE_HABIT";
+export const REORDER_HABITS = "REORDER_HABITS";
 
 export interface Habit {
   id: string;
@@ -40,9 +41,15 @@ interface UpdateHabit {
   name: string;
 }
 
+interface ReorderHabits {
+  type: typeof REORDER_HABITS;
+  habits: Habit[];
+}
+
 export type HabitActionTypes =
   | AddNewDoneDate
   | RemoveDoneDate
   | AddNewHabit
   | DeleteHabit
-  | UpdateHabit;
+  | UpdateHabit
+  | ReorderHabits;

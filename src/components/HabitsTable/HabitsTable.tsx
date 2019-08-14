@@ -2,15 +2,23 @@ import React from "react";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { DropResult } from "react-beautiful-dnd";
 
 import { AppState } from "../../redux/store/store";
-import { HabitsState, Habit } from "../../redux/habits/types";
-import Table from "../Table/Table";
+import { HabitsState } from "../../redux/habits/types";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow
+} from "../Table/Table";
 import IconButton from "../IconButton/IconButton";
 import { getDatesBefore, getDayOfTheWeekName } from "../../utils/dateUtils";
 import {
   addNewDoneDate,
-  removeDoneDate
+  removeDoneDate,
+  reorderHabits
 } from "../../redux/habits/habitsActions";
 import styles from "./HabitsTable.module.css";
 
@@ -18,61 +26,98 @@ interface HabitsTableProps {
   habits: HabitsState;
   addNewDoneDate: typeof addNewDoneDate;
   removeDoneDate: typeof removeDoneDate;
+  reorderHabits: typeof reorderHabits;
 }
 
 const HabitsTable: React.FunctionComponent<HabitsTableProps> = ({
   habits,
   addNewDoneDate,
-  removeDoneDate
+  removeDoneDate,
+  reorderHabits
 }) => {
-  const data = habits.map(habit => {
-    const today = new Date();
-    const lastWeek = getDatesBefore(today, 7);
-
-    const habitLink = (
-      <Link className={styles.habitLink} to={"/habits/" + habit.id}>
-        {habit.name}
-      </Link>
-    );
-
+  const handleDragEnd = (result: DropResult): void => {
+    const { destination, source } = result;
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+    const newHabitsOrder = Array.from(habits);
+    const deletedHabit = newHabitsOrder.splice(source.index, 1);
+    newHabitsOrder.splice(destination.index, 0, ...deletedHabit);
+    reorderHabits(newHabitsOrder);
+  };
+  const renderTableHead = () => {
+    const lastWeek = getDatesBefore(new Date(), 7);
     const cells = lastWeek.map(date => {
-      const dayOfTheWeek = getDayOfTheWeekName(date.getDay());
-      const cellContent = createCellContent(habit, date);
-      return {
-        [dayOfTheWeek]: cellContent
-      };
+      const dayName = getDayOfTheWeekName(date.getDay());
+      return (
+        <TableCell key={date.toString()} isHeader={true}>
+          {dayName}
+        </TableCell>
+      );
     });
 
-    const mergeObjects = (accumulator, currentValue) => {
-      return { ...accumulator, ...currentValue };
-    };
-
-    const cellsData = cells.reduce(mergeObjects, {});
-
-    return { Name: habitLink, ...cellsData };
-  });
-
-  function createCellContent(habit: Habit, date: Date): JSX.Element {
-    const dateExistsInDone = habit.done.includes(date.toDateString());
-
-    function handleUpdateDoneDates(): void {
-      if (dateExistsInDone) {
-        removeDoneDate(habit.id, date);
-      } else {
-        addNewDoneDate(habit.id, date);
-      }
-    }
     return (
-      <IconButton
-        onClick={handleUpdateDoneDates}
-        iconName={"done"}
-        notActive={!dateExistsInDone}
-        filled={dateExistsInDone}
-      />
+      <TableHead>
+        <TableRow draggable={false}>
+          <TableCell isHeader={true} />
+          {cells}
+        </TableRow>
+      </TableHead>
     );
-  }
+  };
 
-  return <Table data={data} />;
+  const renderTableBody = () => {
+    const rows = habits.map((habit, index) => {
+      const habitName = (
+        <TableCell>
+          <Link className={styles.habitLink} to={"/habits/" + habit.id}>
+            {habit.name}
+          </Link>
+        </TableCell>
+      );
+      const lastWeek = getDatesBefore(new Date(), 7);
+      const lastWeekCells = lastWeek.map((date, index) => {
+        const dateExistsInDone = habit.done.includes(date.toDateString());
+        function handleUpdateDoneDates(): void {
+          dateExistsInDone
+            ? removeDoneDate(habit.id, date)
+            : addNewDoneDate(habit.id, date);
+        }
+
+        return (
+          <TableCell key={`${date.toString()}${index}`}>
+            <IconButton
+              onClick={handleUpdateDoneDates}
+              iconName={"done"}
+              notActive={!dateExistsInDone}
+              filled={dateExistsInDone}
+            />
+          </TableCell>
+        );
+      });
+      return (
+        <TableRow key={habit.id} id={habit.id} index={index}>
+          {habitName}
+          {lastWeekCells}
+        </TableRow>
+      );
+    });
+
+    return <TableBody id="habits-table">{rows}</TableBody>;
+  };
+
+  return (
+    <Table handleDragEnd={handleDragEnd}>
+      {renderTableHead()}
+      {renderTableBody()}
+    </Table>
+  );
 };
 
 function mapStateToProps(state: AppState) {
@@ -84,7 +129,8 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     addNewDoneDate: bindActionCreators(addNewDoneDate, dispatch),
-    removeDoneDate: bindActionCreators(removeDoneDate, dispatch)
+    removeDoneDate: bindActionCreators(removeDoneDate, dispatch),
+    reorderHabits: bindActionCreators(reorderHabits, dispatch)
   };
 }
 

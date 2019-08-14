@@ -6,7 +6,8 @@ import {
   ADD_DONE_DATE,
   ADD_NEW_HABIT,
   DELETE_HABIT,
-  UPDATE_HABIT
+  UPDATE_HABIT,
+  REORDER_HABITS
 } from "./types";
 
 export function addNewDoneDate(habitId: string, date: Date): HabitActionTypes {
@@ -44,5 +45,12 @@ export function updateHabit(habitId: string, name: string): HabitActionTypes {
     type: UPDATE_HABIT,
     habitId,
     name
+  };
+}
+
+export function reorderHabits(habits: Habit[]): HabitActionTypes {
+  return {
+    type: REORDER_HABITS,
+    habits
   };
 }

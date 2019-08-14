@@ -2,19 +2,21 @@
 @import "../variables.module.css";
 
 .table {
+  margin-top: 2rem;
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 1.5rem;
 }
 
 .row {
-  background-color: var(--gray-lighter);
+  background-color: var(--white);
 }
 
 .cell {
   text-align: center;
   vertical-align: middle;
-  padding: 1.5rem;
+  padding: 2rem;
+  border-bottom: 1px solid var(--gray-lighter);
+  border-top: 1px solid var(--gray-lighter);
 }
 
 .cell:first-child {
@@ -24,4 +26,8 @@
 }
 .cell:last-child {
   padding-right: 2rem;
+}
+th.cell {
+  border-top: 0;
+  padding-bottom: 1.5rem;
 }
