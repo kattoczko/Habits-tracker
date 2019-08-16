@@ -1,0 +1,6 @@
+@import "../variables.module.css";
+.heading {
+  margin-bottom: 2rem;
+  font-size: var(--font-size-big);
+  font-weight: var(--font-weight-bold);
+}

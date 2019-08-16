@@ -12,6 +12,7 @@ import Modal from "../../components/Modal/Modal";
 import Header from "../../components/Header/Header";
 import IconButton from "../../components/IconButton/IconButton";
 import EditHabit from "../../components/EditHabit/EditHabit";
+import ConfirmationDialog from "../../components/ConfirmationDialog/ConfirmationDialog";
 
 interface ManageHabitPageProps {
   habit: Habit;
@@ -24,13 +25,21 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
   deleteHabit,
   history
 }) => {
+  const [wantToDelete, setWantToDelete] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleDelete() {
-    //TODO add propt when somebody wants to delete a habit
+    setWantToDelete(true);
+  }
+
+  function handleConfirmDelete() {
     setRedirect(true);
     deleteHabit(habit.id);
+  }
+
+  function handleCancelDelete() {
+    setWantToDelete(false);
   }
 
   function handleToggleModal() {
@@ -63,6 +72,13 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
         >
           <EditHabit habit={habit} closeModal={handleToggleModal} />
         </Modal>
+        <ConfirmationDialog
+          isOpen={wantToDelete}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+          contentLabel="Delete Confirmation"
+          message="Are you sure you want to delete this habit?"
+        />
       </div>
     );
   }
@@ -78,7 +94,6 @@ function mapStateToProps(
   const habitId = ownProps.match.params.id;
   const habit = state.habits.find(habit => habit.id === habitId);
   const history = ownProps.history;
-  console.log(history);
 
   return {
     habit,
