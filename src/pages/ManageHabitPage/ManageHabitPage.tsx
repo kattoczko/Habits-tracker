@@ -13,6 +13,7 @@ import Header from "../../components/Header/Header";
 import IconButton from "../../components/IconButton/IconButton";
 import EditHabit from "../../components/EditHabit/EditHabit";
 import ConfirmationDialog from "../../components/ConfirmationDialog/ConfirmationDialog";
+import Calendar from "../../components/Calendar/Calendar";
 
 interface ManageHabitPageProps {
   habit: Habit;
@@ -65,6 +66,7 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
             <IconButton onClick={handleToggleModal} iconName="edit" />
           </Header.Actions>
         </Header>
+        <Calendar markedDates={habit.done} />
         <Modal
           isOpen={modalOpen}
           onRequestClose={handleToggleModal}

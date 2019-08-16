@@ -1,0 +1,53 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
+:root {
+  --cell-size: 3.2rem;
+  --cell-spacing: 0.3rem;
+}
+
+.calendar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 - (var(--cell-spacing));
+}
+
+.column {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  font-size: var(--font-size-tiny);
+}
+
+.cell {
+  text-align: center;
+  line-height: var(--cell-size);
+  width: var(--cell-size);
+  height: var(--cell-size);
+  margin: var(--cell-spacing);
+  background-color: var(--gray-lighter);
+  cursor: pointer;
+}
+
+.cell:hover {
+  color: var(--white);
+  background-color: var(--accent-color);
+  transition: background-color 0.3s var(--timing-function),
+    color 0.3s var(--timing-function);
+}
+
+.cellHeading {
+  composes: cell;
+  font-weight: var(--font-weight-bold);
+  background-color: transparent;
+}
+
+.cellHeading:hover {
+  background-color: transparent;
+}
+
+.cellActive {
+  composes: cell;
+  color: var(--white);
+  background-color: var(--accent-color);
+}

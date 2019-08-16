@@ -1,6 +1,28 @@
-import { NameOfDay, YearMontAndDate } from "../types";
+import { NameOfDay, MonthAbbr, YearMontAndDate } from "../types";
 
-const weekDays: NameOfDay[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+export const weekDays: NameOfDay[] = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+];
+export const monthsAbbr: MonthAbbr[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 
 export function getYearMonthAndDay(date: Date): YearMontAndDate {
   const month = date.getMonth();
@@ -22,6 +44,11 @@ export function getDatesBefore(date: Date, numberOfDaysBefore: number): Date[] {
   }
 
   return datesBefore;
+}
+
+export function getDayBefore(date: Date): Date {
+  const { year, month, day } = getYearMonthAndDay(date);
+  return new Date(year, month, day - 1);
 }
 
 export function getDayOfTheWeekName(day: number): NameOfDay {
