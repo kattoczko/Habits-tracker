@@ -7,7 +7,11 @@ import { History } from "history";
 
 import { Habit } from "../../redux/habits/types";
 import { AppState } from "../../redux/store/store";
-import { deleteHabit } from "../../redux/habits/habitsActions";
+import {
+  deleteHabit,
+  removeDoneDate,
+  addNewDoneDate
+} from "../../redux/habits/habitsActions";
 import Modal from "../../components/Modal/Modal";
 import Header from "../../components/Header/Header";
 import IconButton from "../../components/IconButton/IconButton";
@@ -18,12 +22,16 @@ import Calendar from "../../components/Calendar/Calendar";
 interface ManageHabitPageProps {
   habit: Habit;
   deleteHabit: typeof deleteHabit;
+  removeDoneDate: typeof removeDoneDate;
+  addNewDoneDate: typeof addNewDoneDate;
   history: History;
 }
 
 const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
   habit,
   deleteHabit,
+  removeDoneDate,
+  addNewDoneDate,
   history
 }) => {
   const [wantToDelete, setWantToDelete] = useState(false);
@@ -51,6 +59,15 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
     history.goBack();
   }
 
+  function handleCalendarCellClick(date: Date): void {
+    const dateExistsInDone = habit.done.includes(date.toDateString());
+    if (dateExistsInDone) {
+      removeDoneDate(habit.id, date);
+    } else {
+      addNewDoneDate(habit.id, date);
+    }
+  }
+
   if (!habit || redirect) {
     return <Redirect to="/" />;
   } else if (habit) {
@@ -66,7 +83,10 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
             <IconButton onClick={handleToggleModal} iconName="edit" />
           </Header.Actions>
         </Header>
-        <Calendar markedDates={habit.done} />
+        <Calendar
+          markedDates={habit.done}
+          onCellClick={handleCalendarCellClick}
+        />
         <Modal
           isOpen={modalOpen}
           onRequestClose={handleToggleModal}
@@ -105,7 +125,9 @@ function mapStateToProps(
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    deleteHabit: bindActionCreators(deleteHabit, dispatch)
+    deleteHabit: bindActionCreators(deleteHabit, dispatch),
+    removeDoneDate: bindActionCreators(removeDoneDate, dispatch),
+    addNewDoneDate: bindActionCreators(addNewDoneDate, dispatch)
   };
 }
 

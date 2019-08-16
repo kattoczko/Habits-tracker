@@ -2,14 +2,19 @@
 @import "../variables.module.css";
 
 :root {
-  --cell-size: 3.2rem;
-  --cell-spacing: 0.3rem;
+  /* --cell-size: 45.7px; */
+  /* --cell-spacing: 0; */
+}
+
+.calendarWrapper {
+  display: flex;
 }
 
 .calendar {
   display: flex;
   justify-content: flex-end;
-  margin: 0 - (var(--cell-spacing));
+  flex-grow: 1;
+  /* margin: 0 - (var(--cell-spacing)); */
 }
 
 .column {
@@ -21,11 +26,12 @@
 
 .cell {
   text-align: center;
-  line-height: var(--cell-size);
-  width: var(--cell-size);
-  height: var(--cell-size);
-  margin: var(--cell-spacing);
+  /* line-height: var(--cell-size); */
+  /* width: var(--cell-size);
+  height: var(--cell-size); */
+  /* margin: var(--cell-spacing); */
   background-color: var(--gray-lighter);
+  border: 2px solid var(--white);
   cursor: pointer;
 }
 
@@ -43,6 +49,7 @@
 }
 
 .cellHeading:hover {
+  color: initial;
   background-color: transparent;
 }
 
