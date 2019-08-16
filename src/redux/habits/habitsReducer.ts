@@ -30,11 +30,16 @@ export default function reducer(
     case REMOVE_DONE_DATE:
       return state.map(habit => {
         if (habit.id === action.habitId) {
-          habit.done = habit.done.filter(
+          const newDone = habit.done.filter(
             date => date !== action.date.toDateString()
           );
+          return {
+            ...habit,
+            done: [...newDone]
+          };
+        } else {
+          return habit;
         }
-        return habit;
       });
     case ADD_NEW_HABIT:
       return [...state, { ...action.newHabit }];
