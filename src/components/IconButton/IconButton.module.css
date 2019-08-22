@@ -35,3 +35,19 @@
 .iconFilled:hover {
   color: var(--white);
 }
+
+.small {
+  width: 2.8rem;
+}
+
+.medium {
+  width: 3.4rem;
+}
+
+.big {
+  width: 4.6rem;
+}
+
+.huge {
+  width: 5.8rem;
+}

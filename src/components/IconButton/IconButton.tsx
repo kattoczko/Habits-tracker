@@ -2,7 +2,15 @@ import React from "react";
 import cx from "classnames";
 import styles from "./IconButton.module.css";
 
-type iconNames = "done" | "close" | "add" | "delete" | "edit" | "arrow_back";
+type iconNames =
+  | "done"
+  | "close"
+  | "add"
+  | "delete"
+  | "edit"
+  | "arrow_back"
+  | "arrow_back_ios"
+  | "arrow_forward_ios";
 type size = "small" | "medium" | "big" | "huge";
 
 interface IconButtonProps {
@@ -30,6 +38,10 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
   const iconClassNames = cx(styles.iconBase, {
     [styles.iconLight]: notActive,
     [styles.iconFilled]: filled,
+    [styles.small]: size === "small",
+    [styles.medium]: size === "medium",
+    [styles.big]: size === "big",
+    [styles.huge]: size === "huge",
     "md-18": size === "small",
     "md-24": size === "medium",
     "md-36": size === "big",
