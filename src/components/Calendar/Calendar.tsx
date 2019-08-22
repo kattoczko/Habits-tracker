@@ -20,10 +20,14 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
   markedDates,
   onCellClick
 }) => {
+  const [numberOfColumnsPage, setNumberOfColumnsPage] = useState(
+    getNumberOfColumns()
+  );
+  const [columnsData, setColumnsData] = useState(
+    createColumnsData(numberOfColumnsPage, new Date())
+  );
   const [cellSize, setCellSize] = useState(0);
-  const [numberOfColumnsPage, setNumberOfColumnsPage] = useState(0);
-  const [columnsData, setColumnsData] = useState([]);
-  const totalNumberOfColumns = numberOfColumnsPage + 1;
+
   const wrapperElement = useRef(null);
   const cellDimensions = {
     width: `${cellSize}px`,
@@ -31,13 +35,15 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     lineHeight: `${cellSize}px`
   };
 
-  console.log(columnsData);
+  if (wrapperElement !== null && wrapperElement.current) {
+    console.log("rendered", wrapperElement.current.offsetWidth);
+  } else {
+    console.log("rendered without element");
+  }
 
   useEffect(() => {
     calculateCellSize();
-    setNumberOfColumns();
-    setColumnsData(createColumnsData(numberOfColumnsPage, new Date()));
-  }, [cellSize]);
+  }, [numberOfColumnsPage]);
 
   useEffect(() => {
     window.addEventListener("resize", calculateCellSize);
@@ -45,8 +51,11 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
   });
 
   useEffect(() => {
-    window.addEventListener("resize", setNumberOfColumns);
-    return () => window.removeEventListener("resize", setNumberOfColumns);
+    function updateNumberOfColumns() {
+      setNumberOfColumnsPage(getNumberOfColumns());
+    }
+    window.addEventListener("resize", updateNumberOfColumns);
+    return () => window.removeEventListener("resize", updateNumberOfColumns);
   });
 
   function addNewCalendarPage() {
@@ -57,19 +66,21 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     }
   }
 
-  function setNumberOfColumns() {
+  function getNumberOfColumns() {
     const windowWidth = window.innerWidth;
     if (windowWidth > 1000) {
-      setNumberOfColumnsPage(23);
+      return 23;
     } else if (windowWidth <= 1000 && windowWidth > 700) {
-      setNumberOfColumnsPage(20);
+      return 20;
     } else {
-      setNumberOfColumnsPage(8);
+      return 8;
     }
   }
 
   function calculateCellSize() {
+    const totalNumberOfColumns = numberOfColumnsPage + 1;
     const wrapperWidth = wrapperElement.current.offsetWidth;
+    console.log(wrapperElement.current.offsetWidth);
     setCellSize(wrapperWidth / totalNumberOfColumns);
   }
 
@@ -146,7 +157,7 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     let daysBefore: number;
 
     for (let i = 0; i < numberOfColumns; i++) {
-      if (i === 0) {
+      if (currentDate.getDay() !== 6) {
         daysBefore = currentDate.getDay() + 1;
       } else {
         daysBefore = numberOfCells;
@@ -157,14 +168,18 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     }
     return columns.reverse();
   }
+
   return (
-    <>
+    <div className={styles.container}>
+      <IconButton onClick={addNewCalendarPage} iconName="arrow_back_ios" />
       <div ref={wrapperElement} className={styles.calendarWrapper}>
-        <div className={styles.calendar}>{renderColumns(columnsData)}</div>
+        <div className={styles.calendar}>
+          <div className={styles.slider}>{renderColumns(columnsData)}</div>
+        </div>
         {renderWeekDaysColumn()}
       </div>
-      <IconButton onClick={addNewCalendarPage} iconName="delete" />
-    </>
+      <IconButton onClick={addNewCalendarPage} iconName="arrow_forward_ios" />
+    </div>
   );
 };
 
