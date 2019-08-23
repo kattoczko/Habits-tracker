@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import throttle from "lodash/throttle";
 import {
   monthsAbbr,
   weekDays,
@@ -16,6 +17,36 @@ interface CalendarProps {
   onCellClick: (date: Date) => void;
 }
 
+function getNumberOfColumns() {
+  const windowWidth = window.innerWidth;
+  if (windowWidth < 500) {
+    return 6;
+  } else if (windowWidth >= 500 && windowWidth < 800) {
+    return 12;
+  } else if (windowWidth >= 800) {
+    return 20;
+  }
+}
+
+function createColumnsData(numberOfColumns: number, fromDate: Date): Date[][] {
+  const numberOfCells = 7;
+  const columns: Date[][] = [];
+  let currentDate: Date = fromDate;
+  let daysBefore: number;
+
+  for (let i = 0; i < numberOfColumns; i++) {
+    if (currentDate.getDay() !== 6) {
+      daysBefore = currentDate.getDay() + 1;
+    } else {
+      daysBefore = numberOfCells;
+    }
+    const column = getDatesBefore(currentDate, daysBefore).reverse();
+    columns.push(column);
+    currentDate = getDayBefore(column[0]);
+  }
+  return columns.reverse();
+}
+
 const Calendar: React.FunctionComponent<CalendarProps> = ({
   markedDates,
   onCellClick
@@ -27,7 +58,7 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     createColumnsData(numberOfColumnsPage, new Date())
   );
   const [cellSize, setCellSize] = useState(0);
-
+  const [pageNumber, setPageNumber] = useState(1);
   const wrapperElement = useRef(null);
   const cellDimensions = {
     width: `${cellSize}px`,
@@ -35,13 +66,8 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     lineHeight: `${cellSize}px`
   };
 
-  if (wrapperElement !== null && wrapperElement.current) {
-    console.log("rendered", wrapperElement.current.offsetWidth);
-  } else {
-    console.log("rendered without element");
-  }
-
   useEffect(() => {
+    resetColumnsNumber();
     calculateCellSize();
   }, [numberOfColumnsPage]);
 
@@ -58,6 +84,19 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     return () => window.removeEventListener("resize", updateNumberOfColumns);
   });
 
+  function handlePrevButtonClick() {
+    if (columnsData.length / numberOfColumnsPage === pageNumber) {
+      addNewCalendarPage();
+    }
+    setPageNumber(pageNumber + 1);
+  }
+
+  function handleNextButtonClick() {
+    if (pageNumber > 1) {
+      setPageNumber(pageNumber - 1);
+    }
+  }
+
   function addNewCalendarPage() {
     if (columnsData.length > 0) {
       const lastDate = getDayBefore(columnsData[0][0]);
@@ -66,21 +105,22 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     }
   }
 
-  function getNumberOfColumns() {
-    const windowWidth = window.innerWidth;
-    if (windowWidth > 1000) {
-      return 23;
-    } else if (windowWidth <= 1000 && windowWidth > 700) {
-      return 20;
-    } else {
-      return 8;
-    }
+  function resetColumnsNumber() {
+    // const newNumberOfPages = Math.ceil(
+    //   columnsData.length / numberOfColumnsPage
+    // );
+    // const newCurrentPageNumber = Math.floor(
+    //   ((pageNumber + 1) * prevNumberOfColumnsPage) / numberOfColumnsPage
+    // );
+    // console.log(newCurrentPageNumber);
+    // const newColumnsNumber = newNumberOfPages * numberOfColumnsPage;
+    setPageNumber(1);
+    setColumnsData(createColumnsData(numberOfColumnsPage, new Date()));
   }
 
   function calculateCellSize() {
     const totalNumberOfColumns = numberOfColumnsPage + 1;
     const wrapperWidth = wrapperElement.current.offsetWidth;
-    console.log(wrapperElement.current.offsetWidth);
     setCellSize(wrapperWidth / totalNumberOfColumns);
   }
 
@@ -107,22 +147,53 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
 
   function renderMonth(columnData: Date[]): JSX.Element {
     const monthBeginningDate = columnData.find(date => date.getDate() === 1);
-    const month: string = monthBeginningDate
-      ? monthsAbbr[monthBeginningDate.getMonth()]
-      : "";
+    let element: JSX.Element;
 
+    if (monthBeginningDate) {
+      const month: number = monthBeginningDate.getMonth();
+      const monthName: string = monthsAbbr[month];
+      if (month === 0) {
+        element = renderMonthWithYear(monthBeginningDate);
+      } else {
+        element = (
+          <li className={styles.cellHeading} style={cellDimensions}>
+            {monthName}
+          </li>
+        );
+      }
+    } else {
+      element = <li className={styles.cellHeading} style={cellDimensions} />;
+    }
+
+    return element;
+  }
+
+  function renderMonthWithYear(date: Date): JSX.Element {
+    const year = date
+      .getFullYear()
+      .toString()
+      .slice(-2);
+    const month = monthsAbbr[date.getMonth()];
     return (
       <li className={styles.cellHeading} style={cellDimensions}>
         {month}
+        <span className={styles.year}> '{year}</span>
       </li>
     );
   }
 
   function renderColumns(columnsData: Date[][]): JSX.Element[] {
     const columns = columnsData.map((column, index) => {
+      let month: JSX.Element;
+      if (index % numberOfColumnsPage === 0) {
+        month = renderMonthWithYear(column[column.length - 1]);
+      } else {
+        month = renderMonth(column);
+      }
+
       return (
         <ul key={column.toString()} className={styles.column}>
-          {renderMonth(column)}
+          {month}
           {column.map(date => {
             const isDone = markedDates.includes(date.toDateString());
             const cellClasses = cx({
@@ -147,38 +218,31 @@ const Calendar: React.FunctionComponent<CalendarProps> = ({
     return columns;
   }
 
-  function createColumnsData(
-    numberOfColumns: number,
-    fromDate: Date
-  ): Date[][] {
-    const numberOfCells = 7;
-    const columns: Date[][] = [];
-    let currentDate: Date = fromDate;
-    let daysBefore: number;
-
-    for (let i = 0; i < numberOfColumns; i++) {
-      if (currentDate.getDay() !== 6) {
-        daysBefore = currentDate.getDay() + 1;
-      } else {
-        daysBefore = numberOfCells;
-      }
-      const column = getDatesBefore(currentDate, daysBefore).reverse();
-      columns.push(column);
-      currentDate = getDayBefore(column[0]);
-    }
-    return columns.reverse();
-  }
-
   return (
     <div className={styles.container}>
-      <IconButton onClick={addNewCalendarPage} iconName="arrow_back_ios" />
+      <IconButton onClick={handlePrevButtonClick} iconName="arrow_back_ios" />
       <div ref={wrapperElement} className={styles.calendarWrapper}>
         <div className={styles.calendar}>
-          <div className={styles.slider}>{renderColumns(columnsData)}</div>
+          <div
+            style={
+              pageNumber > 1
+                ? {
+                    transform: `translateX(${pageNumber - 1}00%)`
+                  }
+                : {}
+            }
+            className={styles.slider}
+          >
+            {renderColumns(columnsData)}
+          </div>
         </div>
         {renderWeekDaysColumn()}
       </div>
-      <IconButton onClick={addNewCalendarPage} iconName="arrow_forward_ios" />
+      <IconButton
+        disabled={pageNumber <= 1}
+        onClick={handleNextButtonClick}
+        iconName="arrow_forward_ios"
+      />
     </div>
   );
 };

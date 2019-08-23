@@ -75,7 +75,7 @@ const ManageHabitPage: React.FunctionComponent<ManageHabitPageProps> = ({
       <div>
         <Header>
           <Header.Heading>
-            <IconButton onClick={handleGoBack} iconName="arrow_back" />
+            <IconButton onClick={handleGoBack} iconName="arrow_back_ios" />
             <h1>{habit.name}</h1>
           </Header.Heading>
           <Header.Actions>

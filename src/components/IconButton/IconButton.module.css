@@ -36,6 +36,15 @@
   color: var(--white);
 }
 
+.iconDisabled {
+  color: var(--gray-light);
+  cursor: not-allowed;
+}
+
+.iconDisabled:hover {
+  color: var(--gray-light);
+}
+
 .small {
   width: 2.8rem;
 }

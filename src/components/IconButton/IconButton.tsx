@@ -36,6 +36,7 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
   notActive = false
 }) => {
   const iconClassNames = cx(styles.iconBase, {
+    [styles.iconDisabled]: disabled,
     [styles.iconLight]: notActive,
     [styles.iconFilled]: filled,
     [styles.small]: size === "small",
