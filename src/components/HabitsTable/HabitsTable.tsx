@@ -13,6 +13,7 @@ import {
   TableCell,
   TableRow
 } from "../Table/Table";
+import Icon from "../Icon/Icon";
 import IconButton from "../IconButton/IconButton";
 import { getDatesBefore, getDayOfTheWeekName } from "../../utils/dateUtils";
 import {
@@ -76,6 +77,7 @@ const HabitsTable: React.FunctionComponent<HabitsTableProps> = ({
     const rows = habits.map((habit, index) => {
       const habitName = (
         <TableCell>
+          <Icon iconName="drag_indicator" />
           <Link className={styles.habitLink} to={"/habits/" + habit.id}>
             {habit.name}
           </Link>
