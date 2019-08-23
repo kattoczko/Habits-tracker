@@ -1,23 +1,12 @@
 import React from "react";
-import cx from "classnames";
 import styles from "./IconButton.module.css";
-
-type iconNames =
-  | "done"
-  | "close"
-  | "add"
-  | "delete"
-  | "edit"
-  | "arrow_back"
-  | "arrow_back_ios"
-  | "arrow_forward_ios";
-type size = "small" | "medium" | "big" | "huge";
+import Icon, { iconNames, iconSize } from "../Icon/Icon";
 
 interface IconButtonProps {
   // iconName is Material Design icon name https://material.io/resources/icons/?style=baseline
   iconName: iconNames;
   notActive?: boolean;
-  size?: size;
+  size?: iconSize;
   value?: string;
   name?: string;
   filled?: boolean;
@@ -30,24 +19,11 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
   onClick,
   value = "",
   name = "",
-  iconName = "",
+  iconName,
   filled = false,
   size = "medium",
   notActive = false
 }) => {
-  const iconClassNames = cx(styles.iconBase, {
-    [styles.iconDisabled]: disabled,
-    [styles.iconLight]: notActive,
-    [styles.iconFilled]: filled,
-    [styles.small]: size === "small",
-    [styles.medium]: size === "medium",
-    [styles.big]: size === "big",
-    [styles.huge]: size === "huge",
-    "md-18": size === "small",
-    "md-24": size === "medium",
-    "md-36": size === "big",
-    "md-48": size === "huge"
-  });
   return (
     <button
       className={styles.button}
@@ -57,7 +33,15 @@ const IconButton: React.FunctionComponent<IconButtonProps> = ({
       value={value}
       name={name}
     >
-      <i className={iconClassNames}>{iconName}</i>
+      <Icon
+        hoverable={true}
+        className={styles.iconFocus}
+        filled={filled}
+        disabled={disabled}
+        notActive={notActive}
+        iconSize={size}
+        iconName={iconName}
+      />
     </button>
   );
 };

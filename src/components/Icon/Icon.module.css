@@ -1,0 +1,50 @@
+@import "../colors.module.css";
+@import "../variables.module.css";
+
+.iconBase {
+  composes: material-icons from global;
+  vertical-align: middle;
+  color: var(--text-color);
+  transition: color 0.2s var(--timing-function),
+    background-color 0.2s var(--timing-function);
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.hoverable.iconBase:hover {
+  color: var(--accent-color);
+}
+.iconLight {
+  color: var(--gray-darker);
+}
+.iconFilled {
+  color: var(--white);
+  background-color: var(--accent-color);
+}
+.hoverable.iconFilled:hover {
+  color: var(--white);
+}
+
+.hoverable.iconDisabled {
+  color: var(--gray-light);
+  cursor: not-allowed;
+}
+
+.hoverable.iconDisabled:hover {
+  color: var(--gray-light);
+}
+
+.small {
+  width: 2.8rem;
+}
+
+.medium {
+  width: 3.4rem;
+}
+
+.big {
+  width: 4.6rem;
+}
+
+.huge {
+  width: 5.8rem;
+}
