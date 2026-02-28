@@ -9,7 +9,7 @@
     "@types/react-beautiful-dnd": "^11.0.3",
     "@types/react-dom": "16.8.4",
     "classnames": "^2.2.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.23",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.5",
     "react-dom": "^16.8.6",
